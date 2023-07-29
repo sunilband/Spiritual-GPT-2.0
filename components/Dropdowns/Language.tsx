@@ -18,7 +18,7 @@ const Language = (props: Props) => {
   return (
     <>
       <Select onValueChange={(value) => setLanguage(value)}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[180px] h-12 flex justify-center bg-slate-950 hover:bg-slate-800 tracking-wide ">
           <SelectValue placeholder="Language" />
         </SelectTrigger>
         <SelectContent>

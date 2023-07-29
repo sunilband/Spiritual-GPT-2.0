@@ -24,10 +24,13 @@ import { COOKIE_KEYS } from '@/utils/cookieEnums'
 import Avatar from 'react-avatar'
 import { usePathname } from 'next/navigation'
 import Dailog from '../Dailog/Dailog'
+import { useRouter } from 'next/navigation'
 import { set } from 'firebase/database'
 function Navbar() {
   const page = usePathname()
+  const router = useRouter()
   const routes = ['/login', '/signup']
+  const hideLogoRoutes = ['/login', '/signup', '/']
   const { setUser, user } = useContext(userContext)
   const { history, setHistory } = useContext(historyContext)
   const [dailogData, setDailogData] = React.useState({
@@ -54,7 +57,20 @@ function Navbar() {
   }
 
   return (
-    <div className="flex justify-center absolute left-0 right-0">
+    <div className="flex justify-center items-center absolute left-0 right-0 ">
+      {!hideLogoRoutes.includes(page) && (
+        <div className="absolute left-10 saman text-2xl">
+          <p
+            onClick={() => {
+              user?.email !== '' ? router.push('/') : router.push('/login')
+            }}
+            className="cursor-pointer"
+          >
+            Spiritual GPT
+          </p>
+        </div>
+      )}
+
       {history ? (
         <Dailog
           question={dailogData.question}
@@ -67,25 +83,32 @@ function Navbar() {
         />
       ) : null}
 
-      <NavigationMenu className="h-16 ">
+      <NavigationMenu className="h-16">
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger className="bg-transparent hover:bg-transparent">
               Getting started
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-3 p-6 border w-[300px] md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ">
-                <ListItem href="/how-to-use" title="Introduction">
+              <ul className="card grid gap-3 p-6 border w-[300px] md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ">
+                <ListItem href="/introduction" title="Introduction">
                   Get to know the basic usage of SpiritualGPT.
                 </ListItem>
-                <ListItem href="/Disclaimer" title="Disclaimer">
-                  Read the disclaimer before using SpiritualGPT.
+                <ListItem href="/privacy" title="Privacy Policy">
+                  Read the privacy policy before using Spiritual GPT.
                 </ListItem>
-                <ListItem href="/Contact" title="Contact">
+                <ListItem
+                  href="https://sunilband.netlify.app/#contact"
+                  title="Contact"
+                >
                   Contact us for any questions or concerns.
                 </ListItem>
-                <ListItem href="/about" title="About Dev">
-                  Get to know about the developer.
+                <ListItem
+                  href="https://sunilband.netlify.app/"
+                  target="_blank"
+                  title="About Developer"
+                >
+                  Get to know more about the developer and his work.
                 </ListItem>
                 <Button variant="outline" className="self-center border">
                   <a
@@ -106,34 +129,48 @@ function Navbar() {
               </NavigationMenuTrigger>
               <NavigationMenuContent className="z-10">
                 {history ? (
-                  <ul className="grid w-[300px]  gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {history?.map((item: any, key: any) => (
-                      <div key={key} className="border p-2 rounded-md">
-                        <ListItem
-                          title={
-                            item.question.length > 30
-                              ? item.question.substring(0, 30) + '...'
-                              : item.question
-                          }
-                          onClick={() => {
-                            setDailogData({
-                              question: item.question,
-                              answer: item.answer,
-                              time: item.time,
-                              scripture: item.scripture,
-                              language: item.language,
-                            })
-                            setOpenValue(true)
-                          }}
-                        >
-                          {item.answer}
-                        </ListItem>
-                        <p className="text-xs text-center mt-1">{item.time}</p>
-                      </div>
-                    ))}
+                  <ul className="card grid w-[300px]  gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {history?.map((item: any, key: any) =>
+                      key <= 5 ? (
+                        <div key={key} className="border p-2 rounded-md">
+                          <ListItem
+                            title={
+                              item.question.length > 30
+                                ? item.question.substring(0, 30) + '...'
+                                : item.question
+                            }
+                            onClick={() => {
+                              setDailogData({
+                                question: item.question,
+                                answer: item.answer,
+                                time: item.time,
+                                scripture: item.scripture,
+                                language: item.language,
+                              })
+                              setOpenValue(true)
+                            }}
+                          >
+                            {item.answer}
+                          </ListItem>
+                          <p className="text-xs text-center mt-1">
+                            {item.time}
+                          </p>
+                        </div>
+                      ) : null,
+                    )}
+                    <Button
+                      variant="default"
+                      onClick={() => {
+                        router.push('/history')
+                      }}
+                      className="col-span-2"
+                    >
+                      View all history
+                    </Button>
+                    {/* <Button variant="destructive">Clear History</Button> */}
                   </ul>
                 ) : (
-                  <ul className="flex p-4 w-max py-9">
+                  <ul className=" card flex p-4 w-max py-9">
                     <p className="text-center">Ask questions to view history</p>
                   </ul>
                 )}
@@ -147,7 +184,7 @@ function Navbar() {
                 User
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="flex justify-center items-center gap-4 p-6 w-[320px] md:w-[400px] lg:w-[400px] ">
+                <ul className="card flex justify-center items-center gap-4 p-6 w-[320px] md:w-[400px] lg:w-[400px] ">
                   <li className="flex flex-col justify-center items-center w-auto">
                     <div className="mb-2">
                       <Avatar
@@ -160,9 +197,9 @@ function Navbar() {
                     </div>
 
                     <ListItem
-                      href="/docs"
-                      title="Profile"
-                      className="text-center w-64"
+                      href="#"
+                      title={user?.name}
+                      className="text-center w-64 hover:bg-transparent cur"
                     ></ListItem>
                     <ListItem
                       onClick={logout}
@@ -177,9 +214,9 @@ function Navbar() {
           ) : null}
 
           {/* theme button */}
-          <NavigationMenuItem>
+          {/* <NavigationMenuItem>
             <ThemeButton />
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
     </div>

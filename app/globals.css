@@ -3,25 +3,59 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Roboto:wght@300;500&family=Rubik&display=swap');
 @font-face {
   font-family: 'saman';
   src: url('../public/fonts/SAMAN.TTF');
 }
 
+.rubik {
+  font-family: 'Rubik';
+}
 .saman {
   font-family: 'saman';
 }
-
+.lato {
+  color: #fff;
+  font-family: 'lato', sans-serif;
+  font-weight: 300;
+}
 .roboto {
   font-family: 'Roboto';
   font-size: 17px;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.07);
+  /* background: rgba(255, 255, 255, 0.078); */
+  background: rgba(101, 101, 101, 0.078);
+
   backdrop-filter: blur(2px);
   z-index: 0;
+}
+
+/* style for scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /* animations */

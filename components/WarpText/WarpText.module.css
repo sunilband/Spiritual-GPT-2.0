@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
+.container {
+  /* This filter is a lot of the magic, try commenting it out to see how the morphing works! */
+  filter: url(#threshold) blur(0.6px);
+}
+.text1 {
+  position: absolute;
+  width: 100vw;
+  font-family: 'Raleway', sans-serif;
+  font-size: 50pt;
+  user-select: none;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+.text2 {
+  position: absolute;
+  width: 100vw;
+  font-family: 'Raleway', sans-serif;
+  font-size: 50pt;
+  user-select: none;
+  letter-spacing: 0.1em;
+  text-align: center;
+}

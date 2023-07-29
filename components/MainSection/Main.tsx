@@ -10,6 +10,7 @@ import Language from '../Dropdowns/Language'
 import dropdownContext from '../../context/dropdownContext'
 import userContext from '../../context/userContext'
 import historyContext from '../../context/historyContext'
+import { useRouter } from 'next/navigation'
 
 import { db, app, auth, provider } from '../../firebase/firebase'
 import {
@@ -24,7 +25,6 @@ import {
   onValue,
   orderByValue,
 } from 'firebase/database'
-import { uid } from 'uid'
 
 type Props = {}
 const apiServer = 'https://spiritual-gpt-api.onrender.com'
@@ -35,6 +35,7 @@ const socket = io(apiServer, {
 })
 
 export const Main = (props: Props) => {
+  const router = useRouter()
   const { user } = useContext(userContext)
   const { language, scripture } = useContext(dropdownContext)
   const { history, setHistory } = useContext(historyContext)
@@ -42,6 +43,10 @@ export const Main = (props: Props) => {
   const [answer, setAnswer] = useState('')
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+
+  if (!user) {
+    router.push('/login')
+  }
 
   const generateHandler = async (e?: any) => {
     if (input == '')
@@ -94,68 +99,51 @@ export const Main = (props: Props) => {
     })
   }, [])
 
-  // fetching user specific data
-  useEffect(() => {
-    const fetchData = async () => {
-      const postsRef = query(
-        ref(db, 'responses'),
-        limitToLast(6),
-        orderByChild('email'),
-        // @ts-ignore
-        equalTo(user?.email),
-      )
-      try {
-        onValue(postsRef, (snapshot) => {
-          const fetchedData = snapshot.val()
-          const tempArr = []
-          for (var key in fetchedData) {
-            if (fetchedData.hasOwnProperty(key)) {
-              tempArr.push(fetchedData[key])
-              setHistory(tempArr)
-            }
-          }
-        })
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-    console.log('fetched')
-    fetchData()
-  }, [user])
-
   return (
-    <div className="flex flex-wrap gap-4 justify-center mt-7 ">
-      <TextArea data={answer} />
-      <Input
-        className="w-[80vw] tracking-wider h-12"
-        placeholder="Ask question here..."
-        onChange={(e) => setInput(e.target.value)}
-        value={input}
-      />
-
-      <div className="flex flex-wrap gap-4 justify-center ">
-        <Scripture />
-        <Language />
-
-        <div className="flex flex-wrap gap-4 justify-center">
-          <Button
-            variant="outline"
-            onClick={generateHandler}
-            className="w-28"
-            disabled={!user?.email || loading}
-          >
-            Generate
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setAnswer('')
-              setInput('')
+    // <div className="h-[81.9vh] flex flex-wrap justify-center ">
+    <div className="absolute h-screen max-h-screen overflow-hidden flex flex-wrap justify-center ">
+      <div className="relative top-48">
+        <TextArea data={answer} />
+        <div className="w-screen flex flex-col justify-start items-center">
+          <Input
+            className="w-[80vw] tracking-wider h-12 mb-4  mt-6"
+            placeholder="Ask question here..."
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(ev) => {
+              if (ev.key === 'Enter') {
+                ev.preventDefault()
+                generateHandler()
+              }
             }}
-            className="w-28 border-[#ff000093]"
-          >
-            Clear
-          </Button>
+            value={input}
+          />
+
+          <div className="flex flex-wrap gap-4 justify-center z-10">
+            <Scripture />
+            <Language />
+
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button
+                variant="outline"
+                onClick={generateHandler}
+                className="w-28 h-12 tracking-wide uppercase "
+                disabled={!user?.email || loading}
+              >
+                Generate
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setAnswer('')
+                  setInput('')
+                }}
+                className="w-28  h-12 tracking-wide uppercase text-red-500"
+                disabled={!user?.email || loading}
+              >
+                Clear
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

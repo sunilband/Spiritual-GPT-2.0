@@ -10,6 +10,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'w7.pngwing.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*',
+      },
     ],
   },
 }

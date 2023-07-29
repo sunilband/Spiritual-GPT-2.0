@@ -23,7 +23,8 @@ export default function LoginForm() {
             alt="loginImage"
             width={400}
             height={400}
-            className='dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert hover:scale-105 transition-all duration-300 ease-in-out'          />
+            className="dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert hover:scale-105 transition-all duration-300 ease-in-out"
+          />
         </div>
         <hr className="border h-80 hidden md:inline-block" />
         <div className="lg:p-8 ">
@@ -40,7 +41,7 @@ export default function LoginForm() {
             <p className="px-8 text-center text-sm text-muted-foreground">
               By signing up, you agree to our{' '}
               <Link
-                href="/terms"
+                href="/privacy"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
