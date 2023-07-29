@@ -42,10 +42,10 @@ function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }
 
-export const metadata: Metadata = {
-  title: 'Spiritual GPT',
-  description: 'Get all the spiritual answers with the power of AI',
-}
+// export const metadata: Metadata = {
+//   title: 'Spiritual GPT',
+//   description: 'Get all the spiritual answers with the power of AI',
+// }
 
 export default function RootLayout({
   children,
