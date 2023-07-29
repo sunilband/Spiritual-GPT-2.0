@@ -123,7 +123,10 @@ export default function RootLayout({
             <dropdownContext.Provider
               value={{ language, setLanguage, scripture, setScripture }}
             >
-              <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+              <ThemeProvider 
+              attribute="class" 
+              defaultTheme="dark" 
+              enableSystem>
                 <BG />
                 <Navbar />
 
