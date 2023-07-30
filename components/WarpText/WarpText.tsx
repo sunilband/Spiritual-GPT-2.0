@@ -19,7 +19,6 @@ const WarpText = ({ words }: Props) => {
       text1: document.getElementById('text1'),
       text2: document.getElementById('text2'),
     }
-    console.log(elts)
     // The strings to morph between. You can change these to anything you want!
     const texts = words
 
@@ -100,7 +99,7 @@ const WarpText = ({ words }: Props) => {
     animate()
   }, [])
   return (
-    <>
+    <div className="flex w-screen mt-24">
       {/* Explanation in JS tab */}
       {/* The two texts */}
       <div id="container" className={clsx(classes.container)}>
@@ -123,7 +122,7 @@ const WarpText = ({ words }: Props) => {
           </filter>
         </defs>
       </svg>
-    </>
+    </div>
   )
 }
 

@@ -49,7 +49,6 @@ function Navbar() {
         destroyCookie(null, COOKIE_KEYS.User, {
           path: '/',
         })
-        console.log('User signed out')
       })
       .catch((error) => {
         console.log(error)
@@ -57,17 +56,19 @@ function Navbar() {
   }
 
   return (
-    <div className="flex justify-center items-center absolute left-0 right-0 ">
+    <div className="flex justify-center items-center absolute left-0 right-0 z-50">
       {!hideLogoRoutes.includes(page) && (
-        <div className="absolute left-10 saman text-2xl">
-          <p
-            onClick={() => {
-              user?.email !== '' ? router.push('/') : router.push('/login')
-            }}
-            className="cursor-pointer"
-          >
-            Spiritual GPT
-          </p>
+        <div className="absolute left-10 saman text-2xl invisible sm:visible">
+          <Link href={user?.email !== '' ? '/' : '/login'}>
+            <p
+              onClick={() => {
+                user?.email !== '' ? router.push('/') : router.push('/login')
+              }}
+              className="cursor-pointer"
+            >
+              Spiritual GPT
+            </p>
+          </Link>
         </div>
       )}
 
@@ -90,52 +91,78 @@ function Navbar() {
               Getting started
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="card grid gap-3 p-6 border w-[300px] md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ">
-                <ListItem href="/introduction" title="Introduction">
-                  Get to know the basic usage of SpiritualGPT.
-                </ListItem>
-                <ListItem href="/privacy" title="Privacy Policy">
-                  Read the privacy policy before using Spiritual GPT.
-                </ListItem>
-                <ListItem
+              <ul className="card grid gap-3 p-6 border w-[340px] md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] ">
+                {user?.email !== '' && page !== '/' && (
+                  <div className="md:hidden ">
+                    <Link href="/">
+                      <ListItem title="Home">
+                        Experience the power of Spiritual GPT.
+                      </ListItem>
+                    </Link>
+                  </div>
+                )}
+                <Link href="/introduction">
+                  <ListItem title="Introduction">
+                    Get to know the basic usage of Spiritual GPT.
+                  </ListItem>
+                </Link>
+                <Link href="/privacy">
+                  <ListItem title="Privacy Policy">
+                    Read the privacy policy before using Spiritual GPT.
+                  </ListItem>
+                </Link>
+                <Link
                   href="https://sunilband.netlify.app/#contact"
-                  title="Contact"
-                >
-                  Contact us for any questions or concerns.
-                </ListItem>
-                <ListItem
-                  href="https://sunilband.netlify.app/"
                   target="_blank"
-                  title="About Developer"
                 >
-                  Get to know more about the developer and his work.
-                </ListItem>
-                <Button variant="outline" className="self-center border">
-                  <a
-                    href="https://buy.stripe.com/9AQ7vF3kjedO17G3cd"
-                    target="_blank"
-                  >
-                    Buy me a Coffee
-                  </a>
-                </Button>
+                  <ListItem title="Contact">
+                    Contact us for any questions or concerns.
+                  </ListItem>
+                </Link>
+
+                <Link href="https://sunilband.netlify.app/" target="_blank">
+                  <ListItem title="About Developer">
+                    Get to know more about the developer and his work.
+                  </ListItem>
+                </Link>
+
+                <Link
+                  href="https://buy.stripe.com/9AQ7vF3kjedO17G3cd"
+                  target="_blank"
+                >
+                  {' '}
+                  <div className="lg:w-[240%] flex justify-center">
+                    <Button variant="outline" className="w-[100%]">
+                      Buy me a Coffee
+                    </Button>
+                  </div>
+                </Link>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
           {/* signup/login */}
-          <NavigationMenuItem
-            onClick={() => {
-              page == '/login'
-                ? router.push('/signup')
-                : page == '/signup'
-                ? router.push('/login')
-                : null
-            }}
-          >
-            <a className="text-sm text-center hover:underline cursor-pointer">
-              {page == '/login' ? 'Signup' : page == '/signup' ? 'Login' : null}
-            </a>
-          </NavigationMenuItem>
+          {user?.email == '' ? (
+            <Link
+              href={
+                page == '/login'
+                  ? '/signup'
+                  : page == '/signup'
+                  ? '/login'
+                  : '/login'
+              }
+            >
+              <NavigationMenuItem>
+                <p className="text-sm text-center hover:underline cursor-pointer">
+                  {page == '/login'
+                    ? 'Signup'
+                    : page == '/signup'
+                    ? 'Login'
+                    : 'Login'}
+                </p>
+              </NavigationMenuItem>
+            </Link>
+          ) : null}
 
           {!routes.includes(page) && user?.email !== '' ? (
             <NavigationMenuItem>
@@ -144,7 +171,7 @@ function Navbar() {
               </NavigationMenuTrigger>
               <NavigationMenuContent className="z-10">
                 {history ? (
-                  <ul className="card grid w-[300px]  gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                  <ul className="card grid w-[340px]  gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                     {history?.map((item: any, key: any) =>
                       key <= 5 ? (
                         <div key={key} className="border p-2 rounded-md">
@@ -173,15 +200,16 @@ function Navbar() {
                         </div>
                       ) : null,
                     )}
-                    <Button
-                      variant="default"
-                      onClick={() => {
-                        router.push('/history')
-                      }}
-                      className="col-span-2"
-                    >
-                      View all history
-                    </Button>
+
+                    <Link href="/history">
+                      <Button
+                        variant="default"
+                        className="md:w-[204%] w-[100%]"
+                      >
+                        View all history
+                      </Button>
+                    </Link>
+
                     {/* <Button variant="destructive">Clear History</Button> */}
                   </ul>
                 ) : (

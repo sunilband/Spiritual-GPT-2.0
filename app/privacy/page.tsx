@@ -5,7 +5,7 @@ type Props = {}
 
 const page = (props: Props) => {
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-screen flex justify-center items-center text-justify">
       <div className="h-[80vh] w-[90vw] overflow-y-scroll">
         <div className="flex flex-col justify-center items-center">
           <h3 className="mt-24 text-2xl">Privacy Policy</h3>

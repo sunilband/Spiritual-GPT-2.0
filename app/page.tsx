@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="h-screen w-screen overflow-hidden">
       <Main />
       <Logo />
     </div>

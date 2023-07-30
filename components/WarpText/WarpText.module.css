@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
 .container {
   /* This filter is a lot of the magic, try commenting it out to see how the morphing works! */
+  position: relative;
   filter: url(#threshold) blur(0.6px);
 }
 .text1 {
