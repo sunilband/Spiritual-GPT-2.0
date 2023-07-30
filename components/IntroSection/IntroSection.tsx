@@ -12,7 +12,7 @@ const IntroSection = (props: Props) => {
       </div>
       <div className="px-14 w-[80vw] flex flex-wrap gap-11">
         <div>
-          <h2 className="text-lg font-semibold mt-12 mb-2 underline">About</h2>
+          <h2 className="text-xl font-semibold mt-12 mb-2 ">About</h2>
           <p className="text-wrap text-justify text-md tracking-widest leading-8">
             Spiritual GPT is a web app that generates answers for all the
             spiritual questions based on the {`user's`} choice of language and
@@ -23,14 +23,12 @@ const IntroSection = (props: Props) => {
             <a href="https://sunilband.netlify.app/" target="_blank">
               <span className="underline cursor-pointer">Sunil Band</span>
             </a>{' '}
-            in his free time using awesomeness.
+            in his free time using his awesomeness.
           </p>
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold mt-12 mb-2 underline">
-            Tech Stack
-          </h2>
+          <h2 className="text-xl font-semibold mt-12 mb-2 ">Tech Stack</h2>
           <div className="mt-4 flex  gap-10">
             <span className="flex flex-col gap-2 justify-center items-center">
               <Image

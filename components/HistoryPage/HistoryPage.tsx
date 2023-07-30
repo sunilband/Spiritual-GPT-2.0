@@ -14,7 +14,7 @@ const HistoryPage = (props: Props) => {
           return (
             <div
               key={index}
-              className="flex flex-col items-start gap-2 card border my-4 rounded-md p-4"
+              className="flex flex-col items-start gap-2 card border my-4 rounded-md p-4 text-justify"
             >
               <p className="text-lg">
                 <span className="underline font-medium">Question:</span>{' '}

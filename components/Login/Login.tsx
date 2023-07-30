@@ -151,7 +151,7 @@ const Login = (props: Props) => {
   }
 
   return (
-    <div className={cn('grid gap-6')} {...props}>
+    <div className={cn('grid gap-6 p-2')} {...props}>
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
           <div className="grid gap-1">

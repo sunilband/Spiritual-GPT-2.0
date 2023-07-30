@@ -122,7 +122,22 @@ function Navbar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          {!routes.includes(page) ? (
+          {/* signup/login */}
+          <NavigationMenuItem
+            onClick={() => {
+              page == '/login'
+                ? router.push('/signup')
+                : page == '/signup'
+                ? router.push('/login')
+                : null
+            }}
+          >
+            <a className="text-sm text-center hover:underline cursor-pointer">
+              {page == '/login' ? 'Signup' : page == '/signup' ? 'Login' : null}
+            </a>
+          </NavigationMenuItem>
+
+          {!routes.includes(page) && user?.email !== '' ? (
             <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-transparent hover:bg-transparent">
                 History
@@ -178,7 +193,7 @@ function Navbar() {
             </NavigationMenuItem>
           ) : null}
 
-          {!routes.includes(page) ? (
+          {!routes.includes(page) && user?.email !== '' ? (
             <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-transparent hover:bg-transparent">
                 User
