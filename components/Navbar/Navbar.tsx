@@ -173,7 +173,7 @@ function Navbar() {
                 {history ? (
                   <ul className="card grid w-[340px]  gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                     {history?.map((item: any, key: any) =>
-                      key <= 5 ? (
+                      key <= 3 ? (
                         <div key={key} className="border p-2 rounded-md">
                           <ListItem
                             title={

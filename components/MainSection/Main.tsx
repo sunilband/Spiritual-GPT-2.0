@@ -106,7 +106,7 @@ export const Main = (props: Props) => {
         <TextArea data={answer} />
         <div className="w-screen flex flex-col justify-start items-center">
           <Input
-            className="w-[80vw] tracking-wider h-12 mb-4  mt-6"
+            className="w-[80vw] tracking-wider h-12 mb-4  mt-6 card"
             placeholder="Ask question here..."
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(ev) => {
@@ -126,7 +126,7 @@ export const Main = (props: Props) => {
               <Button
                 variant="outline"
                 onClick={generateHandler}
-                className="w-28 h-12 tracking-wide uppercase "
+                className="w-28 h-12 tracking-wide text-white"
                 disabled={!user?.email || loading}
               >
                 Generate
@@ -137,7 +137,7 @@ export const Main = (props: Props) => {
                   setAnswer('')
                   setInput('')
                 }}
-                className="w-28  h-12 tracking-wide uppercase text-red-500"
+                className="w-28  h-12 tracking-wide  text-red-500"
                 disabled={!user?.email || loading}
               >
                 Clear
