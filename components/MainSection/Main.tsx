@@ -28,7 +28,9 @@ import {
 
 type Props = {}
 const apiServer = process.env.NEXT_PUBLIC_API_SERVER
+console.log('apiServer', apiServer)
 // const apiServer = 'http://localhost:5000/'
+// @ts-ignore
 const socket = io(apiServer, {
   transports: ['websocket'],
   upgrade: false,
@@ -43,7 +45,6 @@ export const Main = (props: Props) => {
   const [answer, setAnswer] = useState('')
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  let endCount = 0
 
   if (!user) {
     router.push('/login')
@@ -83,8 +84,6 @@ export const Main = (props: Props) => {
 
   // storing in database when answer is completed
   useEffect(() => {
-    console.log('end aya', endCount)
-
     socket.on('end', (data) => {
       toast({
         title: 'Answer Completed',
