@@ -121,6 +121,12 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+       <Head>
+        <title>Spiritual GPT</title>
+        <meta property="og:title" content="The Knowledge Of Spiritual Scriptures At Your FingerTips With The Power Of AI !" key="title" />
+        {/* add faviceon */}
+        {/* <Favicon url="/favicon.ico" /> */}
+      </Head>
       <body className={clsx(inter.className)}>
         <userContext.Provider value={{ user, setUser }}>
           <historyContext.Provider value={{ history, setHistory }}>

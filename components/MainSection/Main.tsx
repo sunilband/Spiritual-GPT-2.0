@@ -28,7 +28,6 @@ import {
 
 type Props = {}
 const apiServer = process.env.NEXT_PUBLIC_API_SERVER
-console.log('apiServer', apiServer)
 // const apiServer = 'http://localhost:5000/'
 // @ts-ignore
 const socket = io(apiServer, {
