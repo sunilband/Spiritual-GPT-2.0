@@ -27,8 +27,8 @@ import {
 } from 'firebase/database'
 
 type Props = {}
-// const apiServer = process.env.NEXT_PUBLIC_API_SERVER
-const apiServer = 'http://localhost:5000/'
+const apiServer = process.env.NEXT_PUBLIC_API_SERVER
+// const apiServer = 'http://localhost:5000/'
 const socket = io(apiServer, {
   transports: ['websocket'],
   upgrade: false,
