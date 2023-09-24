@@ -1,7 +1,6 @@
 import Logo from '@/components/Logo/Logo'
 import { Main } from '../components/MainSection/Main'
 import type { Metadata } from 'next'
-import FlowersBG from '@/components/Background/BG'
 
 export const metadata: Metadata = {
   title: 'Spiritual GPT',
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="h-screen w-screen overflow-hidden">
+    <div className="h-screen w-screen ">
       <Main />
       <Logo />
     </div>

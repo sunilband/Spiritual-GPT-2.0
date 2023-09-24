@@ -29,7 +29,6 @@ const HistoryPage = (props: Props) => {
                 <span className="underline font-medium">Answer:</span>{' '}
                 {item.answer}
               </p>
-
               <p className="text-md">
                 <span className="underline font-medium ">Scripture:</span>{' '}
                 {item.scripture}

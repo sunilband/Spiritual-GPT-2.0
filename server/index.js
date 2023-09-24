@@ -78,6 +78,7 @@ io.on('connection', (socket) => {
                     language,
                     user,
                   })
+                  break
                 }
 
                 const parsedLines = lines

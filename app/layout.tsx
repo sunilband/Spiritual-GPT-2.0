@@ -35,7 +35,7 @@ import {
 import { db, app, auth, provider } from '../firebase/firebase'
 import BG from '@/components/Background/BG'
 import Favicon from 'react-favicon'
-
+import Head from 'next/head'
 const inter = Inter({ subsets: ['latin'] })
 
 function ThemeProvider({ children, ...props }: ThemeProviderProps) {
@@ -100,6 +100,10 @@ export default function RootLayout({
       try {
         onValue(postsRef, (snapshot) => {
           const fetchedData = snapshot.val()
+          if (fetchedData == null) {
+            setHistory(null)
+            return
+          }
           const tempArr = []
           for (var key in fetchedData) {
             if (fetchedData.hasOwnProperty(key)) {
@@ -126,7 +130,6 @@ export default function RootLayout({
               <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                 <BG />
                 <Navbar />
-
                 {children}
                 <Toaster />
               </ThemeProvider>

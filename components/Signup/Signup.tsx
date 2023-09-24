@@ -147,7 +147,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                   path: '/', // Cookie available across all paths
                 },
               )
-              // router.push('/')
+              router.push('/')
             })
           })
           .catch((err) => {

@@ -171,47 +171,50 @@ function Navbar() {
               </NavigationMenuTrigger>
               <NavigationMenuContent className="z-10">
                 {history ? (
-                  <ul className="card grid w-[340px]  gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                    {history?.map((item: any, key: any) =>
-                      key <= 3 ? (
-                        <div key={key} className="border p-2 rounded-md">
-                          <ListItem
-                            title={
-                              item.question.length > 30
-                                ? item.question.substring(0, 30) + '...'
-                                : item.question
-                            }
-                            onClick={() => {
-                              setDailogData({
-                                question: item.question,
-                                answer: item.answer,
-                                time: item.time,
-                                scripture: item.scripture,
-                                language: item.language,
-                              })
-                              setOpenValue(true)
-                            }}
-                          >
-                            {item.answer}
-                          </ListItem>
-                          <p className="text-xs text-center mt-1">
-                            {item.time}
-                          </p>
-                        </div>
-                      ) : null,
-                    )}
-
-                    <Link href="/history">
-                      <Button
-                        variant="default"
-                        className="md:w-[204%] w-[100%]"
-                      >
-                        View all history
-                      </Button>
-                    </Link>
-
-                    {/* <Button variant="destructive">Clear History</Button> */}
-                  </ul>
+                  <div className="flex flex-col gap-2 justify-center items-center pb-4">
+                    {/* <ul className={`card grid w-[340px] gap-3 p-4 md:w-[500px] ${history.length>1?"md:grid-cols-2":"md:grid-cols-1"} lg:w-[600px] `}> */}
+                    <ul
+                      className={`card grid w-[320px] gap-3 p-4 md:w-[500px] ${
+                        history.length > 1 ? 'md:grid-cols-2' : 'md:grid-cols-1'
+                      } lg:w-[600px] `}
+                    >
+                      {history?.map((item: any, key: any) =>
+                        key <= 3 ? (
+                          <div key={key} className="border p-2 rounded-md">
+                            <ListItem
+                              title={
+                                item.question.length > 30
+                                  ? item.question.substring(0, 30) + '...'
+                                  : item.question
+                              }
+                              onClick={() => {
+                                setDailogData({
+                                  question: item.question,
+                                  answer: item.answer,
+                                  time: item.time,
+                                  scripture: item.scripture,
+                                  language: item.language,
+                                })
+                                setOpenValue(true)
+                              }}
+                            >
+                              {item.answer}
+                            </ListItem>
+                            <p className="text-xs text-center mt-1">
+                              {item.time}
+                            </p>
+                          </div>
+                        ) : null,
+                      )}
+                    </ul>
+                    <div className="w-[90%] bg-[#0A0F1D]">
+                      <Link href="/history">
+                        <Button variant="default" className="w-[100%] pb-2">
+                          View all history
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 ) : (
                   <ul className=" card flex p-4 w-max py-9">
                     <p className="text-center">Ask questions to view history</p>

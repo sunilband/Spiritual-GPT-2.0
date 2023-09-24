@@ -27,8 +27,8 @@ import {
 } from 'firebase/database'
 
 type Props = {}
-const apiServer = 'https://spiritual-gpt-api.onrender.com'
-// const apiServer = 'http://localhost:5000/'
+// const apiServer = process.env.NEXT_PUBLIC_API_SERVER
+const apiServer = 'http://localhost:5000/'
 const socket = io(apiServer, {
   transports: ['websocket'],
   upgrade: false,
@@ -43,6 +43,7 @@ export const Main = (props: Props) => {
   const [answer, setAnswer] = useState('')
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  let endCount = 0
 
   if (!user) {
     router.push('/login')
@@ -57,6 +58,7 @@ export const Main = (props: Props) => {
       try {
         setAnswer('')
         setLoading(true)
+
         socket.emit('question', {
           scripture: scripture,
           question: input,
@@ -81,6 +83,8 @@ export const Main = (props: Props) => {
 
   // storing in database when answer is completed
   useEffect(() => {
+    console.log('end aya', endCount)
+
     socket.on('end', (data) => {
       toast({
         title: 'Answer Completed',
@@ -97,6 +101,10 @@ export const Main = (props: Props) => {
       })
       setLoading(false)
     })
+
+    return () => {
+      socket.off('end')
+    }
   }, [])
 
   return (
