@@ -79,6 +79,16 @@ export const Main = (props: Props) => {
     socket.on('answer', (data) => {
       setAnswer(data)
     })
+    socket.on('error', (data: any) => {
+      console.log(data)
+      toast({
+        variant: 'destructive',
+        title: ` I cant answer this question because it was unable to generate due to ${
+          data.response.promptFeedback.blockReason || ''
+        } reason`,
+      })
+      setLoading(false)
+    })
   }, [])
 
   // storing in database when answer is completed
