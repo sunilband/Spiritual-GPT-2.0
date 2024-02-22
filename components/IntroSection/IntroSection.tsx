@@ -18,11 +18,11 @@ const IntroSection = (props: Props) => {
           <p className="text-wrap text-justify text-md tracking-widest leading-8">
             Spiritual GPT is a web app that generates answers for all the
             spiritual questions based on the {`user's`} choice of language and
-            scripture. The app is built using GPT-3, a state-of-the-art language
-            model developed by OpenAI. The model is trained on a large corpus of
+            scripture. The app is built using Gemini AI, a state-of-the-art language
+            model developed by Google. The model is trained on a large corpus of
             spiritual texts and is fine-tuned on the {`user's`} choice of
             language and scripture. The app is built by{' '}
-            <a href="https://sunilband.netlify.app/" target="_blank">
+            <a href="https://sunilband.me" target="_blank">
               <span className="underline cursor-pointer">Sunil Band</span>
             </a>{' '}
             in his free time using his awesomeness.
@@ -89,6 +89,28 @@ const IntroSection = (props: Props) => {
                 className="rounded-full w-14 h-14 hover:scale-105 transition-all duration-300 ease-in-out"
               ></Image>
               <p className="text-md text-center absolute top-20">Firebase</p>
+            </span>
+
+            <span className="flex flex-col gap-2 justify-center items-center relative">
+              <Image
+                src="https://cdn.icon-icons.com/icons2/2699/PNG/512/expressjs_logo_icon_169185.png"
+                alt="firebase"
+                height={100}
+                width={100}
+                className="rounded-full w-14 h-14 hover:scale-105 transition-all duration-300 ease-in-out bg-white p-2" 
+              ></Image>
+              <p className="text-md text-center absolute top-20">Express</p>
+            </span>
+
+            <span className="flex flex-col gap-2 justify-center items-center relative">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Socket-io.svg/1024px-Socket-io.svg.png"
+                alt="firebase"
+                height={100}
+                width={100}
+                className="rounded-full w-14 h-14 hover:scale-105 transition-all duration-300 ease-in-out bg-white p-2" 
+              ></Image>
+              <p className="text-md text-center absolute top-20">Socket.io</p>
             </span>
           </div>
         </div>
