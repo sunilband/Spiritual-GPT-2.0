@@ -29,7 +29,6 @@ import Loader from '../Loader/Loader'
 
 type Props = {}
 const apiServer = process.env.NEXT_PUBLIC_API_SERVER
-// const apiServer = 'http://localhost:5000/'
 // @ts-ignore
 const socket = io(apiServer, {
   transports: ['websocket'],
@@ -47,7 +46,7 @@ export const Main = (props: Props) => {
   const [loading, setLoading] = useState(false)
   const [connected, setConnected] = useState(false)
   const [recievingAnswer, setRecievingAnswer] = useState(false)
-
+  console.log("recievingAnswer",recievingAnswer,"connected",connected)
   if (!user) {
     router.push('/login')
   }
@@ -76,12 +75,15 @@ export const Main = (props: Props) => {
       }
     }
   }
-  
-  // setting answer till packets arrive
   useEffect(() => {
     if (socket.connected) {
+      console.log('connected')
       setConnected(true)
     }
+  }, [socket.connected])
+
+  // setting answer till packets arrive
+  useEffect(() => {
     socket.on('answer', (data) => {
       setAnswer(data)
       setRecievingAnswer(false)
