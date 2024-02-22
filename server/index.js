@@ -12,8 +12,7 @@ const io = new Server(server, {
   },
 })
 
-
-const { GoogleGenerativeAI } = require('@google/generative-ai')
+const { GoogleGenerativeAI} = require('@google/generative-ai')
 require('dotenv').config()
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY)
@@ -30,21 +29,41 @@ io.on('connection', (socket) => {
       let ans = ''
       const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
       const prompt = `${question} according to ${scripture}. also give references.answer only in in ${language}.If the question is not releted to the specific scripture, please mention the scripture name that is relevent.`
+   
       model.generateContentStream(prompt).then(async (result) => {
         for await (const chunk of result.stream) {
+          // Safety check for prompt
+          if(chunk?.candidates[0]?.finishReason!=="STOP"){
+            socket.emit(
+              'error',
+              `Sorry, I can't answer that question because it was blocked due to ${chunk?.candidates[0]?.finishReason} reason. Please try another question.`,
+            )
+            break
+          }
+          // Safety check for prompt
+          if(chunk?.promptFeedback?.blockReason){
+            socket.emit(
+            'error',
+            `Sorry, I can't answer that question because it was blocked due to ${chunk.promptFeedback.blockReason} reason. Please try another question.`,
+          )
+          break
+          }
           const chunkText = chunk.text()
           // Send chunkText to the client
           ans += chunkText
           socket.emit('answer', ans)
         }
         // Indicate the end of the stream
-        socket.emit('end', {
-          answer: ans,
-          question,
-          scripture,
-          language,
-          user,
-        })
+        if(ans.length>0){
+          socket.emit('end', {
+            answer: ans,
+            question,
+            scripture,
+            language,
+            user,
+          })
+        }
+        
       })
     } catch (error) {
       console.log(error)

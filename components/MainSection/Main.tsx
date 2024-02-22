@@ -25,6 +25,7 @@ import {
   onValue,
   orderByValue,
 } from 'firebase/database'
+import Loader from '../Loader/Loader'
 
 type Props = {}
 const apiServer = process.env.NEXT_PUBLIC_API_SERVER
@@ -44,6 +45,8 @@ export const Main = (props: Props) => {
   const [answer, setAnswer] = useState('')
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [connected, setConnected] = useState(false)
+  const [recievingAnswer, setRecievingAnswer] = useState(false)
 
   if (!user) {
     router.push('/login')
@@ -58,7 +61,7 @@ export const Main = (props: Props) => {
       try {
         setAnswer('')
         setLoading(true)
-
+        setRecievingAnswer(true)
         socket.emit('question', {
           scripture: scripture,
           question: input,
@@ -73,21 +76,25 @@ export const Main = (props: Props) => {
       }
     }
   }
-
+  
   // setting answer till packets arrive
   useEffect(() => {
+    if (socket.connected) {
+      setConnected(true)
+    }
     socket.on('answer', (data) => {
       setAnswer(data)
+      setRecievingAnswer(false)
     })
     socket.on('error', (data: any) => {
-      console.log(data)
       toast({
         variant: 'destructive',
         title: ` I cant answer this question because it was unable to generate due to ${
-          data.response.promptFeedback.blockReason || ''
+          data || ''
         } reason`,
       })
       setLoading(false)
+      setRecievingAnswer(false)
     })
   }, [])
 
@@ -108,6 +115,7 @@ export const Main = (props: Props) => {
         scripture: data.scripture,
       })
       setLoading(false)
+      setRecievingAnswer(false)
     })
 
     return () => {
@@ -119,8 +127,14 @@ export const Main = (props: Props) => {
     // <div className="h-[81.9vh] flex flex-wrap justify-center ">
     <div className="absolute h-screen max-h-screen overflow-hidden flex flex-wrap justify-center ">
       <div className="relative top-48">
-        <TextArea data={answer} />
+        {
+          !connected || recievingAnswer  ? <div className='w-full flex justify-center'>
+            <Loader connected={connected} loading={recievingAnswer}/>
+            </div> : <TextArea data={answer} />
+        }
+    
         <div className="w-screen flex flex-col justify-start items-center">
+
           <Input
             className="w-[80vw] tracking-wider h-12 mb-4  mt-6 card"
             placeholder="Ask question here..."
