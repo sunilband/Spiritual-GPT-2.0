@@ -91,9 +91,9 @@ export const Main = (props: Props) => {
     socket.on('error', (data: any) => {
       toast({
         variant: 'destructive',
-        title: ` I cant answer this question because it was unable to generate due to ${
+        title: `${
           data || ''
-        } reason`,
+        } `,
       })
       setLoading(false)
       setRecievingAnswer(false)

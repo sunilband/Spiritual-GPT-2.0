@@ -32,14 +32,7 @@ io.on('connection', (socket) => {
    
       model.generateContentStream(prompt).then(async (result) => {
         for await (const chunk of result.stream) {
-          // Safety check for prompt
-          if(chunk?.candidates[0]?.finishReason!=="STOP"){
-            socket.emit(
-              'error',
-              `Sorry, I can't answer that question because it was blocked due to ${chunk?.candidates[0]?.finishReason} reason. Please try another question.`,
-            )
-            break
-          }
+          // console.log("chonkkkk",chunk)
           // Safety check for prompt
           if(chunk?.promptFeedback?.blockReason){
             socket.emit(
@@ -48,6 +41,15 @@ io.on('connection', (socket) => {
           )
           break
           }
+          // Safety check for prompt
+          if(chunk?.candidates[0]?.finishReason!=="STOP"){
+            socket.emit(
+              'error',
+              `Sorry, I can't answer that question because it was blocked due to ${chunk?.candidates[0]?.finishReason} reason. Please try another question.`,
+            )
+            break
+          }
+          
           const chunkText = chunk.text()
           // Send chunkText to the client
           ans += chunkText
